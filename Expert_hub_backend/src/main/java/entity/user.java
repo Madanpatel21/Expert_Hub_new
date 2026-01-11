@@ -1,7 +1,8 @@
 package entity;
 
-import jakarta.persistence.Column;
+import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -34,4 +35,5 @@ public class user {
  @ManyToOne(fetch = FetchType.EAGER)
  @JoinColumn(name = "role_id", nullable = false)
  private role role; // user role
+
 }
