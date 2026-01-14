@@ -28,4 +28,9 @@ public class clientProfileService {
 
 	        ClientProfileRepository.save(profile);
 	 }
+	 public void updateProfileImage(Long profileId, String fileName) {
+		 clientProfile profile= ClientProfileRepository.findById(profileId).orElseThrow(()-> new badRequestException("Client profile Not found"));
+		 profile.setProfileImagePath(fileName);
+		 ClientProfileRepository.save(profile);
+	 }
 }

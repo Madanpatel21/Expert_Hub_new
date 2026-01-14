@@ -23,4 +23,6 @@ public class clientProfile {
  @OneToOne
  @JoinColumn(name="user_id", nullable = false, unique = true)
  private user User;
+ 
+ private String profileImagePath;
 }

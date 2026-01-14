@@ -1,13 +1,15 @@
 package service;
 
+import java.time.LocalDateTime;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 
 import Repository.roleRepository;
 import Repository.userRepository;
 import dto.loginRequest;
+import dto.otpVerifyRequest;
 import dto.registerRequest;
 import entity.role;
 import entity.user;
@@ -19,6 +21,10 @@ public class authService {
 	private final userRepository userRepo;
 	@Autowired
 	private final roleRepository roleRepo;
+	
+	private String generateOtp() {
+	    return String.valueOf(100000 + new Random().nextInt(900000));
+	}
 	
 	public authService(userRepository userRepo, roleRepository roleRepo) {
 		this.userRepo=userRepo;
@@ -45,6 +51,24 @@ public class authService {
 		if(!User.getPassword().equals(request.getPassword())) {
 			throw new badRequestException("Invalid Password");
 		}
+		String otp=generateOtp();
+		User.setOtp(otp);
+		User.setOtpExpiry(LocalDateTime.now().plusMinutes(5));
+		
+		userRepo.save(User);
+		System.out.println("Login OTP : "+ otp);
+		
+	}
+	public void verifyOtp(otpVerifyRequest request) {
+		user User= userRepo.findByEmail(request.getEmail()).
+				orElseThrow(()-> new badRequestException("User not found"));
+	if(User.getOtp()==null|| User.getOtpExpiry()==null ||!User.getOtp().equals(request.getOtp()) 
+			|| User.getOtpExpiry().isBefore(LocalDateTime.now())) {
+		throw new badRequestException("Invalid or Expired OTP ");
+		}
+	 User.setOtp(null);
+	 User.setOtpExpiry(null);
+	 userRepo.save(User);
 	
 	}
 }

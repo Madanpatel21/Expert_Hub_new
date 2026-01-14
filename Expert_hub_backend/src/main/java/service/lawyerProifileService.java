@@ -36,4 +36,10 @@ public class lawyerProifileService {
 
         LawyerProfileRepository.save(profile);
     }
+    public void updateProfileImage(Long profileId,String fileName) {
+    		lawyerProfile profile= LawyerProfileRepository.findById(profileId).orElseThrow(()-> new badRequestException("Lawyer profile not found"));
+    		profile.setProfileImagePath(fileName);
+    		LawyerProfileRepository.save(profile);
+    
+    }
 }

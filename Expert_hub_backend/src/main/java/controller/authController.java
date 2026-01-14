@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dto.apiResponse;
 import dto.loginRequest;
+import dto.otpVerifyRequest;
 import dto.registerRequest;
 import service.authService;
 
@@ -28,5 +29,10 @@ public class authController {
    public apiResponse<String> login(@RequestBody loginRequest request) {
 	   Authservice.login(request);
 	   return new apiResponse<String>("Login Successfully",true,null);
+   }
+   @PostMapping("/verify-otp")
+   public apiResponse<String> verifyOtp(@RequestBody otpVerifyRequest request){
+	   Authservice.verifyOtp(request);
+	   return new apiResponse<>("Login Successful",true,null);
    }
 }

@@ -2,6 +2,7 @@ package entity;
 
 import java.time.LocalDateTime;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -35,5 +36,9 @@ public class user {
  @ManyToOne(fetch = FetchType.EAGER)
  @JoinColumn(name = "role_id", nullable = false)
  private role role; // user role
-
+ 
+ @Column(length = 6)
+ private String otp;
+ 
+ private LocalDateTime otpExpiry;
 }
