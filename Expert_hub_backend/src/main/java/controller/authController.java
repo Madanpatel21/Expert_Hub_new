@@ -33,6 +33,6 @@ public class authController {
    @PostMapping("/verify-otp")
    public apiResponse<String> verifyOtp(@RequestBody otpVerifyRequest request){
 	   Authservice.verifyOtp(request);
-	   return new apiResponse<>("Login Successful",true,null);
+	   return new apiResponse<>("Login Successful",true,request);
    }
 }
